@@ -34,6 +34,8 @@ var auteurSchema = new mongoose.Schema({
     required: true,
     transform: (x) => DateTime.fromJSDate(x).toISODate(),
   },
+  livre: {type: Number, required:true, ref:"livres"},
+  // livres: [livreSchema],
 });
 
 auteurSchema.set("toJSON", {

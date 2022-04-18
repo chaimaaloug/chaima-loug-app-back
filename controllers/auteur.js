@@ -42,6 +42,15 @@ exports.create = [
     .isISO8601()
     .toDate(),
 
+
+    body("livre")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("livre must be specified.")
+    .isAlphanumeric()
+    .withMessage("livre has non-alphanumeric characters."),
+
   // Process Request
   (req, res, next) => {
 
@@ -55,6 +64,7 @@ exports.create = [
       sexe: req.body.sexe,
       email: req.body.email,
       dateOfBirth: req.body.dateOfBirth,
+      livre: req.body.livre,
     });
 
     if (!errors.isEmpty()) {
@@ -72,7 +82,9 @@ exports.create = [
 
 // Read
 exports.getAll = function (req, res, next) {
-  Auteur.find().exec(function (err, result) {
+  Auteur.find()
+  .populate("livre")
+  .exec(function (err, result) {
     if (err) {
       return res.status(500).json(err);
     }
@@ -96,7 +108,9 @@ exports.getById = [
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     } else {
-      Auteur.findById(req.params.id).exec(function (err, result) {
+      Auteur.findById(req.params.id)
+      .populate("livre")
+      .exec(function (err, result) {
         if (err) {
           return res.status(500).json(err);
         }
@@ -172,6 +186,14 @@ exports.update = [
     .isISO8601()
     .toDate(),
 
+  body("livre")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("livre must be specified.")
+    .isAlphanumeric()
+    .withMessage("livre has non-alphanumeric characters."),
+
   (req, res, next) => {
     // Extract the validation errors from a request.
 
@@ -186,6 +208,7 @@ exports.update = [
       sexe: req.body.sexe,
       email: req.body.email,
       dateOfBirth: req.body.dateOfBirth,
+      livre: req.body.livre,
     });
 
 

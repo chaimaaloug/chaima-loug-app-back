@@ -11,7 +11,7 @@ var livreSchema = new mongoose.Schema({
   _id: { type: Number, required: true },
   bookTitle: { type: String, required: true },
   bookPublisher: { type: String, required: true },
-  bookType: { type: String, required: true, enum: ["Manga", "Biography", "Science Fiction", "Personal Development", "Self Help"] },
+  bookType: { type: String, required: true, enum: ["Manga", "Biography", "Science Fiction", "Personal Development", "Self Help", "Education", "Novel"] },
   releaseDate: {
     type: Date,
     required: true,
