@@ -4,11 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+
 var auteursRouter = require('./routes/auteurs');
 var livresRouter = require('./routes/livres');
 
 var app = express();
+var cors = require("cors");
+
 var mongoose = require('mongoose');
 const auteur = require('./models/auteur');
 const livre = require('./models/livre');
@@ -38,10 +40,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
-app.use('/', indexRouter);
+
 app.use('/auteurs', auteursRouter);
 app.use('/livres', livresRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
